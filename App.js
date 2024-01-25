@@ -5,8 +5,7 @@ import MainList from './src/MainList';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text style={styles.container}>Track caught Pals</Text>
-      {/* <MainList style={styles}></MainList> */}
+      <MainList style={styles}></MainList>
       <StatusBar style="auto" />
     </View>
   );

@@ -1,5 +1,6 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {Button, Keyboard, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View} from 'react-native';
+import { ListEntry } from './ListEntry';
 
 type Parameters = {
   style: StyleSheet.NamedStyles<any>;
@@ -8,19 +9,29 @@ type Parameters = {
 export const MainList: FC<Parameters> = ({
   style,
 }): ReactElement => {
-  const [text, setText] = useState('');
+  const [data, setData] = useState([{}]);
+
+  function addNewEntry () {
+    setData([...data, {}])
+  }
+
+
   return (
-    <View style={{padding: 10}}>
-      <TextInput
-        style={{height: 40}}
-        placeholder="Type here to translate!"
-        onChangeText={newText => setText(newText)}
-        defaultValue={text}
-      />
-      <Text style={{padding: 10, fontSize: 42}}>
-        {text}
-      </Text>
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={{padding: 60}}>
+        <Text style={{fontSize: 30}}>Track caught Pals</Text>
+        {data.map((datum, i) => {
+          return <ListEntry key={i}/>
+        })}
+        
+        <Button
+          onPress={addNewEntry}
+          title="Add Entry"
+          accessibilityLabel="Add a new tracking entry"
+        />
+
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

@@ -1,0 +1,4 @@
+get pal names (might be manual, don't think api exists)
+order by name
+search by name
+show/hide (esp when over 10?)
