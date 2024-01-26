@@ -27,8 +27,8 @@ export const MainList: FC<Parameters> = ({
   }
 
   return (
-    <Pressable onPress={Keyboard.dismiss} accessible={false}>
-      <View style={{paddingVertical: 60, marginHorizontal: 30}}>
+    <Pressable style={{width:'100%', height: '80%'}} onPress={Keyboard.dismiss} accessible={false}>
+      <View style={{paddingVertical: 20, paddingHorizontal: 20, backgroundColor: '#ddd', width:'100%'}}>
         <Text style={{fontSize: 30}}>Track caught Pals</Text>
         <Pressable
           style={styles.addButton}
