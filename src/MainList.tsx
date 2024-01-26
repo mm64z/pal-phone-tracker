@@ -1,5 +1,5 @@
-import React, {FC, ReactElement, useState} from 'react';
-import {Button, Keyboard, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View} from 'react-native';
+import React, { FC, ReactElement, useState } from 'react';
+import { Button, Keyboard, Pressable, ScrollView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { ListEntry } from './ListEntry';
 import { PalState } from './reducers/types';
 import { IdMap, Pal } from './types';
@@ -27,21 +27,25 @@ export const MainList: FC<Parameters> = ({
   }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={{padding: 60}}>
+    <Pressable onPress={Keyboard.dismiss} accessible={false}>
+      <View style={{paddingVertical: 60, marginHorizontal: 30}}>
         <Text style={{fontSize: 30}}>Track caught Pals</Text>
-        {Object.keys(palList).map((id, i) => {
-          return <ListEntry id={id} key={i}/>
-        })}
-        
-        <Button
+        <Pressable
+          style={styles.addButton}
           onPress={addNewEntry}
-          title="Add Entry"
-          accessibilityLabel="Add a new tracking entry"
-        />
+          aria-label="Add a new tracking entry"
+        >
+          <Text>Add Entry</Text>
+        </Pressable>
+        <ScrollView>
+          {Object.keys(palList).map((id, i) => {
+            return <ListEntry id={id} key={i}/>
+          })}
+        </ScrollView>
+        
 
       </View>
-    </TouchableWithoutFeedback>
+    </Pressable>
   );
 };
 
@@ -50,6 +54,14 @@ const mapStateToProps = () => {
     return {
       palList: PalReducer.palList,
     }
+  }
+}
+
+const styles = {
+  addButton: {
+    backgroundColor: '#2196F3',
+    alignItems: 'center' as const,
+    paddingVertical: 5,
   }
 }
 

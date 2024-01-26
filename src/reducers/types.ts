@@ -12,3 +12,7 @@ export interface UpdatePalAction {
   id: ID,
   pal: Partial<Pal>,
 }
+
+export interface DeletePalAction {
+  id: ID,
+}

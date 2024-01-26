@@ -1,18 +1,16 @@
-import { FC, ReactElement, useState } from "react";
-import { Button, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { FC, ReactElement } from "react";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Pal, ID } from "./types";
 import { PalState } from "./reducers/types";
-import { Id } from "@reduxjs/toolkit/dist/tsHelpers";
 import { useDispatch, useSelector } from "react-redux";
-import { updatePal } from "./reducers/reducer";
-
-
-interface Entry {
-
-}
+import { deletePal, updatePal } from "./reducers/reducer";
 
 interface Parameters {
   id: ID,
+}
+
+interface State {
+  pal: Pal,
 }
 
 export const ListEntry: FC<Parameters> = ({
@@ -32,6 +30,11 @@ export const ListEntry: FC<Parameters> = ({
         name: newText,
       },
     }))
+  }
+
+  function deleteThis () {
+    dispatch(deletePal({id}))
+    // setValue(parseInt(newValue));
   }
 
   function setValue (newValue: string) {
@@ -59,7 +62,15 @@ export const ListEntry: FC<Parameters> = ({
   }
 
   return (
-    <View style={styles.overall}>
+     <View style={styles.overall}>
+      <View style={styles.buttonContainer}>
+        <Pressable 
+          onPress={deleteThis}
+          style={styles.buttonStyle}
+          accessibilityLabel="Delete this entry">
+          <Text style={styles.buttonText}>X</Text>
+        </Pressable>
+      </View>
       <TextInput
         style={styles.input}
         onChangeText={changeText}
@@ -92,10 +103,6 @@ export const ListEntry: FC<Parameters> = ({
   )
 }
 
-interface State {
-  pal: Pal,
-}
-
 const mapStateToProps = (id: ID) => {
   return ({PalReducer}: {PalReducer: PalState}): State => {
     return {
@@ -107,6 +114,7 @@ const mapStateToProps = (id: ID) => {
 const styles = StyleSheet.create({
   overall: {
     flexDirection: 'row',
+    // paddingHorizontal: 10,
   },
   input: {
     flex: 3,

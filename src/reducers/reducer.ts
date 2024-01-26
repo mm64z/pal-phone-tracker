@@ -1,9 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { AddPalAction, PalState, UpdatePalAction } from './types';
+import { AddPalAction, DeletePalAction, PalState, UpdatePalAction } from './types';
 import { IdMap, Pal } from '../types';
 import { generateID } from '../utils';
-
-
 
 const slice = createSlice({
   name: 'palcounter',
@@ -13,6 +11,7 @@ const slice = createSlice({
   reducers: {
     addPal: addPalHandler,
     updatePal: updatePalHandler,
+    deletePal: deletePalHandler,
   },
 });
 
@@ -32,5 +31,9 @@ function updatePalHandler (state: PalState, { payload }: PayloadAction<UpdatePal
   state.palList[payload.id] = updatedPal;
 }
 
-export const { addPal, updatePal } = slice.actions;
+function deletePalHandler (state: PalState, { payload }: PayloadAction<DeletePalAction>) {
+  delete state.palList[payload.id];
+}
+
+export const { addPal, updatePal, deletePal } = slice.actions;
 export const PalReducer = slice.reducer;
