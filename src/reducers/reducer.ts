@@ -1,17 +1,19 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { AddPalAction, DeletePalAction, PalState, UpdatePalAction } from './types';
+import { AddPalAction, DeletePalAction, PalState, UpdatePalAction, UpdateSearchAction } from './types';
 import { IdMap, Pal } from '../types';
 import { generateID } from '../utils';
 
 const slice = createSlice({
   name: 'palcounter',
   initialState: {
-    palList: {},
+    allPals: {},
+    searchText: '',
   },
   reducers: {
     addPal: addPalHandler,
     updatePal: updatePalHandler,
     deletePal: deletePalHandler,
+    updateSearch: updateSearchHandler,
   },
 });
 
@@ -22,18 +24,23 @@ function addPalHandler (state: PalState, { payload }: PayloadAction<AddPalAction
     name: "",
     numberCaught: 0,
   }
-
-  state.palList[id] = {...defaultPal, ...payload.pal}
+  const newPal = {...defaultPal, ...payload.pal};
+  
+  state.allPals[newPal.id] = newPal;
 }
 
 function updatePalHandler (state: PalState, { payload }: PayloadAction<UpdatePalAction>) {
-  const updatedPal = {...state.palList[payload.id], ...payload.pal}
-  state.palList[payload.id] = updatedPal;
+  const updatedPal = {...state.allPals[payload.id], ...payload.pal}
+  state.allPals[payload.id] = updatedPal;
 }
 
 function deletePalHandler (state: PalState, { payload }: PayloadAction<DeletePalAction>) {
-  delete state.palList[payload.id];
+  delete state.allPals[payload.id];
 }
 
-export const { addPal, updatePal, deletePal } = slice.actions;
+function updateSearchHandler (state: PalState, { payload }: PayloadAction<UpdateSearchAction>) {
+  state.searchText = payload.text;
+}
+
+export const { addPal, updatePal, deletePal, updateSearch } = slice.actions;
 export const PalReducer = slice.reducer;

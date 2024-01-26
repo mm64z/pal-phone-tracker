@@ -21,8 +21,8 @@ const rootReducer = (state = initialState, action: any) => {
 
 
 const persistedReducer = persistCombineReducers(persistConfig, {
-  rootReducer,
-  PalReducer,
+  root: rootReducer,
+  pal: PalReducer,
 });
 
 const store = configureStore({

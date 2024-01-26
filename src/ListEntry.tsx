@@ -5,6 +5,7 @@ import { PalState } from "./reducers/types";
 import { useDispatch, useSelector } from "react-redux";
 import { deletePal, updatePal } from "./reducers/reducer";
 import { Icon } from "@rneui/themed";
+import { createSelector } from "@reduxjs/toolkit";
 
 interface Parameters {
   id: ID,
@@ -40,7 +41,7 @@ export const ListEntry: FC<Parameters> = ({
 
   function setValue (newValue: string) {
     const toSet = parseInt(newValue);
-    updateValue(toSet);
+    updateValue(isNaN(toSet) ? 0 : toSet);
     // setValue(parseInt(newValue));
   }
 
@@ -121,12 +122,31 @@ export const ListEntry: FC<Parameters> = ({
   )
 }
 
+// const selectItems = state => state.items
+// const selectItemId = (state, itemId) => itemId
+
+// const selectItemById = createSelector(
+//   [selectItems, selectItemId],
+//   (items, itemId) => items[itemId]
+// )
+
+// const item = selectItemById(state, 42)
+
+const selectPals = (state: {pal: PalState}) => state.pal.allPals;
+const selectPalId = (state: {pal: PalState}, id) => id;
+
 const mapStateToProps = (id: ID) => {
-  return ({PalReducer}: {PalReducer: PalState}): State => {
-    return {
-      pal: PalReducer.palList[id],
-    }
-  }
+  return createSelector([selectPals], 
+    (palList) => {
+      return {
+        pal: palList[id]
+      }
+    });
+  // return ({pal}: {pal: PalState}): State => {
+  //   return {
+  //     pal: pal.allPals[id],
+  //   }
+  // }
 }
 
 const styles = StyleSheet.create({
