@@ -4,6 +4,7 @@ import { Pal, ID } from "./types";
 import { PalState } from "./reducers/types";
 import { useDispatch, useSelector } from "react-redux";
 import { deletePal, updatePal } from "./reducers/reducer";
+import { Icon } from "@rneui/themed";
 
 interface Parameters {
   id: ID,
@@ -61,15 +62,22 @@ export const ListEntry: FC<Parameters> = ({
     }))
   }
 
+  const iconSize = 15;
+
   return (
      <View style={styles.overall}>
       <View style={styles.buttonContainer}>
-        <Pressable 
+        <Icon
+          color="#f34540"
+          reverseColor="#000"
+          name="delete"
           onPress={deleteThis}
-          style={styles.buttonStyle}
-          accessibilityLabel="Delete this entry">
-          <Text style={styles.buttonText}>X</Text>
-        </Pressable>
+          raised
+          reverse
+          size={iconSize}
+          type="material"
+          aria-label="delete"
+        />
       </View>
       <TextInput
         style={styles.input}
@@ -77,12 +85,17 @@ export const ListEntry: FC<Parameters> = ({
         value={pal.name}
       />
       <View style={styles.buttonContainer}>
-        <Pressable 
-          onPress={decValue}
-          style={styles.buttonStyle}
-          accessibilityLabel="Subtract one">
-          <Text style={styles.buttonText}>-</Text>
-        </Pressable>
+        <Icon
+            color="#2196F3"
+            reverseColor="#000"
+            name="remove"
+            onPress={decValue}
+            raised
+            reverse
+            size={iconSize}
+            type="material"
+            aria-label="remove one"
+          />
       </View>
       <TextInput
         style={styles.numberInput}
@@ -92,12 +105,17 @@ export const ListEntry: FC<Parameters> = ({
         value={pal.numberCaught.toString()}
       />
       <View style={styles.buttonContainer}>
-        <Pressable 
-          onPress={incValue}
-          style={styles.buttonStyle}
-          accessibilityLabel="Add one">
-          <Text style={styles.buttonText}>+</Text>
-        </Pressable>
+        <Icon
+            color="#2196F3"
+            reverseColor="#000"
+            name="add"
+            onPress={incValue}
+            raised
+            reverse
+            size={iconSize}
+            type="material"
+            aria-label="add one"
+          />
       </View>
     </View>
   )
@@ -126,6 +144,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonStyle: {
     width: 30,
@@ -133,6 +152,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#2196F3',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  deleteButton: {
+    backgroundColor: '#d31811',
   },
   buttonText: {
     fontSize: 20,

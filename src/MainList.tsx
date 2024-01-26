@@ -62,6 +62,7 @@ const styles = {
     backgroundColor: '#2196F3',
     alignItems: 'center' as const,
     paddingVertical: 5,
+    borderRadius: 10,
   }
 }
 
