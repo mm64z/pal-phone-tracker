@@ -11295,7 +11295,7 @@
     "suitability": [
       {
         "type": "watering",
-        "level": null
+        "level": 1
       }
     ],
     "drops": ["Pal Fluids"],
