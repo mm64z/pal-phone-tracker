@@ -1,5 +1,5 @@
 import { FC, ReactElement } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Pal, ID } from "./types";
 import { PalState } from "./reducers/types";
 import { useDispatch, useSelector } from "react-redux";
@@ -59,6 +59,11 @@ export const ListEntry: FC<Parameters> = ({
 
   return (
      <View style={styles.overall}>
+      <Image
+        source={pal.image}
+        resizeMode='cover'
+        style={{width: 50, height: 50}}
+      ></Image>
       <Text
         style={styles.input}
       >{pal.name}</Text>

@@ -3,6 +3,7 @@ import { AddPalAction, DeletePalAction, LoadAllPalsAction, PalState, UpdatePalAc
 import { ID, IdMap, Pal, PalJson } from '../types';
 import { generateID } from '../utils';
 import { palJson } from '../constants';
+import { palImages } from '../../public/images';
 
 const slice = createSlice({
   name: 'palcounter',
@@ -35,7 +36,9 @@ function loadAllPalsHandler (state: PalState, { payload }: PayloadAction<LoadAll
       id: pal.id,
       name: pal.name,
       numberCaught: count,
+      image: palImages[pal.key],
     }
+    // console.log("'" + pal.key + "': require('./" + pal.key + ".png'),");
     newPalMap[pal.id] = newPal;
   })
   state.allPals = newPalMap;
@@ -47,6 +50,7 @@ function addPalHandler (state: PalState, { payload }: PayloadAction<AddPalAction
     id: id,
     name: "",
     numberCaught: 0,
+    image: '',
   }
 
   const newPal = {...defaultPal, id, ...payload.pal};

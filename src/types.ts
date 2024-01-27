@@ -1,3 +1,5 @@
+
+
 export type ID = string;
 export type IdMap<T> = {[id: ID]: T}
 
@@ -5,6 +7,7 @@ export type Pal = {
   id: ID | number,
   name: string,
   numberCaught: number,
+  image: string,
 }
 
 export type PalJson = {
