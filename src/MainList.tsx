@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState } from 'react';
+import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { Button, Keyboard, Pressable, ScrollView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { ListEntry } from './ListEntry';
 import { PalState } from './reducers/types';
@@ -43,13 +43,6 @@ export const MainList: FC<Parameters> = ({
             onChangeText={setSearchText}
             value={searchText}>
           </SearchBar>
-          <Pressable
-            style={styles.addButton}
-            onPress={addNewEntry}
-            aria-label="Add a new tracking entry"
-          >
-            <Text>Add Entry</Text>
-          </Pressable>
         </View>
         <ScrollView>
           {palList.map((id, i) => {
@@ -69,10 +62,10 @@ const mapStateToProps = () => {
       selectSearchText
     ],
     (allPals: IdMap<Pal>, searchText: string) => {
+      const filteredList = (searchText === '') ? Object.values(allPals) : 
+        Object.values(allPals).filter((pal: Pal) => (pal.name.toLowerCase().includes(searchText.toLowerCase())));
       return {
-        palList: Object.values(allPals).filter((pal: Pal) => {
-          return (pal.name.toLowerCase().includes(searchText.toLowerCase()));
-        }).map ((pal) => pal.id)
+        palList: filteredList.map ((pal) => pal.id)
       }
   })
 }

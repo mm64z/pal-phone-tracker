@@ -21,11 +21,7 @@ export const ListEntry: FC<Parameters> = ({
   const { pal }: State = useSelector(mapStateToProps(id));
   const dispatch = useDispatch();
 
-  // const [text, setText] = useState('');
-  // const [value, setValue] = useState(0);
-
   function changeText (newText: string) {
-    // setText(newText);
     dispatch(updatePal({
       id: id,
       pal: {
@@ -36,21 +32,17 @@ export const ListEntry: FC<Parameters> = ({
 
   function deleteThis () {
     dispatch(deletePal({id}))
-    // setValue(parseInt(newValue));
   }
 
   function setValue (newValue: string) {
     const toSet = parseInt(newValue);
     updateValue(isNaN(toSet) ? 0 : toSet);
-    // setValue(parseInt(newValue));
   }
 
   function incValue () {
-    // setValue(value+1)
     updateValue(pal.numberCaught+1);
   }
   function decValue () {
-    // setValue(value-1)
     updateValue(pal.numberCaught-1);
   }
 
@@ -67,24 +59,9 @@ export const ListEntry: FC<Parameters> = ({
 
   return (
      <View style={styles.overall}>
-      <View style={styles.buttonContainer}>
-        <Icon
-          color="#f34540"
-          reverseColor="#000"
-          name="delete"
-          onPress={deleteThis}
-          raised
-          reverse
-          size={iconSize}
-          type="material"
-          aria-label="delete"
-        />
-      </View>
-      <TextInput
+      <Text
         style={styles.input}
-        onChangeText={changeText}
-        value={pal.name}
-      />
+      >{pal.name}</Text>
       <View style={styles.buttonContainer}>
         <Icon
             color="#2196F3"

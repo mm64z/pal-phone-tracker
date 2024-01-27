@@ -5,6 +5,9 @@ export interface PalState {
   searchText: string;
 }
 
+export interface LoadAllPalsAction {
+}
+
 export interface AddPalAction {
   pal?: Partial<Pal>,
 }
