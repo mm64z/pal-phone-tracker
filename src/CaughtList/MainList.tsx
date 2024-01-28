@@ -2,11 +2,12 @@ import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { Button, Keyboard, Pressable, ScrollView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { ListEntry } from './ListEntry';
 import { PalState } from './reducers/types';
-import { ID, IdMap, Pal } from './types';
+import { ID, IdMap, Pal } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPal, updateSearch } from './reducers/reducer';
 import { createSelector } from '@reduxjs/toolkit';
 import { SearchBar } from '@rneui/themed';
+import { CaughtPalState } from './reducers/types';
 
 type Parameters = {
   style: StyleSheet.NamedStyles<any>;
@@ -70,12 +71,12 @@ const mapStateToProps = () => {
   })
 }
 
-const selectAllPals = ({pal}: {pal: PalState}) => {
-  return pal.allPals;
+const selectAllPals = ({ core }: { core: PalState}) => {
+  return core.allPals;
 }
 
-const selectSearchText = ({pal}: {pal: PalState}) => {
-  return pal.searchText;
+const selectSearchText = ({ caught }: { caught: CaughtPalState}) => {
+  return caught.searchText;
 }
 
 const styles = {

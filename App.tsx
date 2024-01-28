@@ -1,20 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import { Provider, useDispatch } from 'react-redux';
-import MainList from './src/MainList';
-import store, { persistor } from './src/reducers/store';
+import { Provider } from 'react-redux';
+import MainList from './src/CaughtList/MainList';
+import store, { persistor } from './src/CoreState/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { useEffect } from 'react';
+import { loadAllPals } from './src/CoreState/reducer';
 import { palJson } from './src/constants';
-import { loadAllPals } from './src/reducers/reducer';
 
 
 export default function App() {
 
   useEffect(() => {
-    const loadedPalsCount = Object.keys(store.getState().pal.allPals).length;
+    // const loadedPalsCount = Object.keys(store.getState().core.allPals).length;
     // if (loadedPalsCount !== palJson.length) {
-      store.dispatch(loadAllPals({}))
+      store.dispatch(loadAllPals({
+        allPalJson: palJson,
+      }))
     // }
   },[])
 

@@ -1,11 +1,13 @@
-import { IdMap, Pal, ID } from "../types"
+import { IdMap, Pal, ID } from "../../types"
 
-export interface PalState { 
-  allPals: IdMap<Pal>;
+export interface CaughtPalState { 
+  allPals: IdMap<PalCaught>;
   searchText: string;
 }
 
-export interface LoadAllPalsAction {
+export interface PalCaught {
+  id: ID,
+  numberCaught: number,
 }
 
 export interface AddPalAction {
@@ -14,7 +16,7 @@ export interface AddPalAction {
 
 export interface UpdatePalAction {
   id: ID,
-  pal: Partial<Pal>,
+  pal: Partial<PalCaught>,
 }
 
 export interface DeletePalAction {

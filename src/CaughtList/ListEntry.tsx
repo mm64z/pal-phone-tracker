@@ -1,38 +1,30 @@
 import { FC, ReactElement } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { Pal, ID } from "./types";
-import { PalState } from "./reducers/types";
+import { Pal, ID } from "../types";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePal, updatePal } from "./reducers/reducer";
 import { Icon } from "@rneui/themed";
 import { createSelector } from "@reduxjs/toolkit";
+import { updatePal } from "./reducers/reducer";
+import { PalState } from "../CoreState/types";
+import { CaughtPalState } from "./reducers/types";
 
 interface Parameters {
   id: ID,
 }
 
 interface State {
-  pal: Pal,
+  image: string,
+  name: string,
+  numberCaught: number,
 }
 
 export const ListEntry: FC<Parameters> = ({
   id,
 }): ReactElement => {
-  const { pal }: State = useSelector(mapStateToProps(id));
+  const { image, name, numberCaught }: State = useSelector(mapStateToProps(id));
   const dispatch = useDispatch();
 
-  function changeText (newText: string) {
-    dispatch(updatePal({
-      id: id,
-      pal: {
-        name: newText,
-      },
-    }))
-  }
 
-  function deleteThis () {
-    dispatch(deletePal({id}))
-  }
 
   function setValue (newValue: string) {
     const toSet = parseInt(newValue);
@@ -40,10 +32,10 @@ export const ListEntry: FC<Parameters> = ({
   }
 
   function incValue () {
-    updateValue(pal.numberCaught+1);
+    updateValue(numberCaught+1);
   }
   function decValue () {
-    updateValue(pal.numberCaught-1);
+    updateValue(numberCaught-1);
   }
 
   function updateValue (newValue: number) {
@@ -60,13 +52,13 @@ export const ListEntry: FC<Parameters> = ({
   return (
      <View style={styles.overall}>
       <Image
-        source={pal.image}
+        source={image}
         resizeMode='cover'
         style={{width: 50, height: 50}}
       ></Image>
       <Text
         style={styles.input}
-      >{pal.name}</Text>
+      >{name}</Text>
       <View style={styles.buttonContainer}>
         <Icon
             color="#2196F3"
@@ -85,7 +77,7 @@ export const ListEntry: FC<Parameters> = ({
         inputMode="numeric"
         textAlign="center"
         onChangeText={setValue}
-        value={pal.numberCaught.toString()}
+        value={numberCaught.toString()}
       />
       <View style={styles.buttonContainer}>
         <Icon
@@ -114,14 +106,16 @@ export const ListEntry: FC<Parameters> = ({
 
 // const item = selectItemById(state, 42)
 
-const selectPals = (state: {pal: PalState}) => state.pal.allPals;
-const selectPalId = (state: {pal: PalState}, id) => id;
+const selectCorePals = ({ core }: { core: PalState }) => core.allPals;
+const selectCaughtPals = ({ caught }: { caught: CaughtPalState }) => caught.allPals;
 
 const mapStateToProps = (id: ID) => {
-  return createSelector([selectPals], 
-    (palList) => {
+  return createSelector([selectCorePals, selectCaughtPals], 
+    (corePalList, caughtPalList) => {
       return {
-        pal: palList[id]
+        name: corePalList[id].name,
+        image: corePalList[id].image,
+        numberCaught: caughtPalList[id]?.numberCaught || 0,
       }
     });
   // return ({pal}: {pal: PalState}): State => {

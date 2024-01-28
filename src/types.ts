@@ -1,17 +1,16 @@
 
 
-export type ID = string;
+export type ID = number;
 export type IdMap<T> = {[id: ID]: T}
 
 export type Pal = {
-  id: ID | number,
+  id: ID,
   name: string,
-  numberCaught: number,
   image: string,
 }
 
 export type PalJson = {
-  id: number,
+  id: ID,
   key: string,
   image: string,
   name: string,

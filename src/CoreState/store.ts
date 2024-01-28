@@ -1,8 +1,8 @@
-import { PayloadAction, configureStore } from '@reduxjs/toolkit';
-import { Store, combineReducers } from 'redux';
-import { PalReducer } from './reducer';
+import { configureStore } from '@reduxjs/toolkit';
+import { PalCaughtReducer } from '../CaughtList/reducers/reducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { persistStore, persistReducer, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistCombineReducers } from 'redux-persist'
+import { persistStore, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistCombineReducers } from 'redux-persist'
+import { PalReducer } from './reducer';
 
 
 const persistConfig = {
@@ -14,15 +14,13 @@ const persistConfig = {
 
 const initialState = {app: {}};
 
-const rootReducer = (state = initialState, action: any) => {
-  return state;
-};
+
 
 
 
 const persistedReducer = persistCombineReducers(persistConfig, {
-  root: rootReducer,
-  pal: PalReducer,
+  core: PalReducer,
+  caught: PalCaughtReducer,
 });
 
 const store = configureStore({
@@ -31,9 +29,14 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        ignoredPaths: ['core.allPals']
       },
+      immutableCheck: {
+        // Ignore state paths
+        ignoredPaths: ['core.allPals']
+      }
     }),
-})
+  })
 
 export const persistor = persistStore(store)
 export default store;

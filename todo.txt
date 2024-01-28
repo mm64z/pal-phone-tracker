@@ -1,4 +1,9 @@
 get pal names (might be manual, don't think api exists)
-order by name
 search by name
 show/hide (esp when over 10?)
+
+other tabs
+search drops
+search passives
+  group passives (aura) by type
+filter by suitability
