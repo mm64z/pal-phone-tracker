@@ -1,4 +1,4 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, useEffect } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Pal, ID } from "../types";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { updatePal } from "./reducers/reducer";
 import { PalState } from "../CoreState/types";
 import { CaughtPalState } from "./reducers/types";
+import store from "../CoreState/store";
 
 interface Parameters {
   id: ID,
@@ -46,6 +47,8 @@ export const ListEntry: FC<Parameters> = ({
       },
     }))
   }
+  
+  useEffect(() => { console.log(name + " " + numberCaught);}, [numberCaught]);
 
   const iconSize = 15;
 
@@ -106,23 +109,37 @@ export const ListEntry: FC<Parameters> = ({
 
 // const item = selectItemById(state, 42)
 
-const selectCorePals = ({ core }: { core: PalState }) => core.allPals;
-const selectCaughtPals = ({ caught }: { caught: CaughtPalState }) => caught.allPals;
+const selectCorePal = ({ core }: { core: PalState }, id) => core.allPals[id];
+const selectCaughtPalNumber = ({ caught }: { caught: CaughtPalState }, id) => caught.allPals[id]?.numberCaught;
+const selectId = ({ caught }: { caught: CaughtPalState }, id) => id;
+const ListSelector = createSelector([selectCorePal, selectCaughtPalNumber, selectId], 
+  (corePal, numberCaught, id) => {
+    return {
+      name: corePal.name,
+      image: corePal.image,
+      numberCaught: numberCaught || 0,
+    }
+  });
+
+  const selectCorePals = ({ core }: { core: PalState }) => core.allPals;
+  const selectCaughtPals = ({ caught }: { caught: CaughtPalState }) => caught.allPals;
+
 
 const mapStateToProps = (id: ID) => {
-  return createSelector([selectCorePals, selectCaughtPals], 
-    (corePalList, caughtPalList) => {
+  // const state = store.getState();
+  // return ListSelector(state, id);
+
+  return createSelector([selectCorePals, selectCaughtPals],
+    (corePals, caughtPals) => {
+      console.log(corePals);
+      console.log(caughtPals);
       return {
-        name: corePalList[id].name,
-        image: corePalList[id].image,
-        numberCaught: caughtPalList[id]?.numberCaught || 0,
+        name: corePals[id].name,
+        image: corePals[id].image,
+        numberCaught: caughtPals[id]?.numberCaught || 0,
       }
-    });
-  // return ({pal}: {pal: PalState}): State => {
-  //   return {
-  //     pal: pal.allPals[id],
-  //   }
-  // }
+    })
+
 }
 
 const styles = StyleSheet.create({
