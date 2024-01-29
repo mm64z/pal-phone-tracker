@@ -46,9 +46,7 @@ export const ListEntry: FC<Parameters> = ({
         numberCaught: newValue,
       },
     }))
-  }
-  
-  useEffect(() => { console.log(name + " " + numberCaught);}, [numberCaught]);
+  } 
 
   const iconSize = 15;
 
@@ -99,21 +97,14 @@ export const ListEntry: FC<Parameters> = ({
   )
 }
 
-// const selectItems = state => state.items
-// const selectItemId = (state, itemId) => itemId
+const selectId = (state, id) => id;
+const selectCorePals = ({ core }: { core: PalState }) => core.allPals;
+const selectCaughtPals = ({ caught }: { caught: CaughtPalState }) => caught.allPals;
+const selectCorePal = createSelector([selectCorePals, selectId], (corePals, id) => corePals[id])
+const selectCaughtPalNumber = createSelector([selectCaughtPals, selectId], (caught, id) => caught[id]?.numberCaught);
 
-// const selectItemById = createSelector(
-//   [selectItems, selectItemId],
-//   (items, itemId) => items[itemId]
-// )
-
-// const item = selectItemById(state, 42)
-
-const selectCorePal = ({ core }: { core: PalState }, id) => core.allPals[id];
-const selectCaughtPalNumber = ({ caught }: { caught: CaughtPalState }, id) => caught.allPals[id]?.numberCaught;
-const selectId = ({ caught }: { caught: CaughtPalState }, id) => id;
-const ListSelector = createSelector([selectCorePal, selectCaughtPalNumber, selectId], 
-  (corePal, numberCaught, id) => {
+const selectListInfo = createSelector([selectCorePal, selectCaughtPalNumber], 
+  (corePal, numberCaught) => {
     return {
       name: corePal.name,
       image: corePal.image,
@@ -121,25 +112,8 @@ const ListSelector = createSelector([selectCorePal, selectCaughtPalNumber, selec
     }
   });
 
-  const selectCorePals = ({ core }: { core: PalState }) => core.allPals;
-  const selectCaughtPals = ({ caught }: { caught: CaughtPalState }) => caught.allPals;
-
-
 const mapStateToProps = (id: ID) => {
-  // const state = store.getState();
-  // return ListSelector(state, id);
-
-  return createSelector([selectCorePals, selectCaughtPals],
-    (corePals, caughtPals) => {
-      console.log(corePals);
-      console.log(caughtPals);
-      return {
-        name: corePals[id].name,
-        image: corePals[id].image,
-        numberCaught: caughtPals[id]?.numberCaught || 0,
-      }
-    })
-
+  return (state) => selectListInfo(state, id);
 }
 
 const styles = StyleSheet.create({
