@@ -1,3 +1,4 @@
 import allJson from '../public/pals.json';
+import { PalJson } from './types';
 
-export const palJson = allJson;
+export const palJson: PalJson[] = allJson;

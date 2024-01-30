@@ -3,6 +3,7 @@ import { PalCaughtReducer } from '../CaughtList/reducers/reducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistStore, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistCombineReducers } from 'redux-persist'
 import { PalReducer } from './reducer';
+import { AuraFilterReducer } from '../PassiveGrouper/state/reducer';
 
 
 const persistConfig = {
@@ -21,6 +22,7 @@ const initialState = {app: {}};
 const persistedReducer = persistCombineReducers(persistConfig, {
   core: PalReducer,
   caught: PalCaughtReducer,
+  aura: AuraFilterReducer,
 });
 
 const store = configureStore({

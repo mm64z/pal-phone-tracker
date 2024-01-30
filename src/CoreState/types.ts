@@ -1,7 +1,7 @@
 import { IdMap, Pal, PalJson } from "../types";
 
 export interface LoadAllPalsAction {
-  allPalJson: PalJson,
+  allPalJson: PalJson[],
 }
 
 

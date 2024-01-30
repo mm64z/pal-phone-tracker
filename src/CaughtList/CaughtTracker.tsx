@@ -1,34 +1,27 @@
-import React, { FC, ReactElement, useEffect, useState } from 'react';
-import { Button, Keyboard, Pressable, ScrollView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import React, { FC, ReactElement } from 'react';
+import { Keyboard, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { ListEntry } from './ListEntry';
-import { PalState } from './reducers/types';
 import { ID, IdMap, Pal } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPal, updateSearch } from './reducers/reducer';
+import { updateSearch } from './reducers/reducer';
 import { createSelector } from '@reduxjs/toolkit';
 import { SearchBar } from '@rneui/themed';
 import { CaughtPalState } from './reducers/types';
+import { PalState } from '../CoreState/types';
 
 type Parameters = {
-  style: StyleSheet.NamedStyles<any>;
+  // style: StyleSheet.NamedStyles<any>;
 }
 
 type State = {
   palList: Array<ID>,
 }
 
-export const MainList: FC<Parameters> = ({
-  style,
+export const CaughtTracker: FC<Parameters> = ({
 }): ReactElement => {
   const { palList }: State = useSelector(mapStateToProps());
   const searchText: string = useSelector(selectSearchText);
   const dispatch = useDispatch();
-  const [data, setData] = useState([{}]);
-
-  function addNewEntry () {
-    setData([...data, {}])
-    dispatch(addPal({}));
-  }
 
   function setSearchText (text: string) {
     dispatch(updateSearch({text}));
@@ -96,5 +89,3 @@ const styles = {
     margin: 2,
   }
 }
-
-export default MainList;
