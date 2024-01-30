@@ -1,4 +1,4 @@
-import { PalJson } from "../types";
+import { ID, PalJson } from "../types";
 import { Pal } from "./types";
 
 interface SearchItem {
@@ -33,7 +33,7 @@ const groups: SearchItem[] = [{
 
 export interface FilteredGroup {
   group: string,
-  matchingPals: Array<Pal>
+  matchingPals: Array<ID>
 }
 
 // given palJson, return grouped 
@@ -41,14 +41,10 @@ export function sorter (palJson: PalJson[]): FilteredGroup[] {
   let sortedGroups: FilteredGroup[] = [];
   groups.map((group) => {
     const groupName = group.name;
-    let matchingPals: Array<Pal> = [];
+    let matchingPals: Array<ID> = [];
     palJson.map((pal) => {
       if (pal.aura.description.toLowerCase().includes(group.text.toLowerCase())) {
-        matchingPals.push({
-          name: pal.name,
-          image: pal.image,
-          aura: pal.aura.description,
-        })
+        matchingPals.push(pal.id);
       }
     })
     sortedGroups.push({

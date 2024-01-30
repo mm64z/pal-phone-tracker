@@ -21,6 +21,7 @@ function loadAllPalsHandler (state: PalState, { payload }: PayloadAction<LoadAll
       id: pal.id,
       name: pal.name,
       image: palImages[pal.key],
+      aura: pal.aura.description,
     }
     // console.log("'" + pal.key + "': require('./" + pal.key + ".png'),");
     newPalMap[pal.id] = newPal;

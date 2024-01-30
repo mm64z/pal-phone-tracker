@@ -1,4 +1,4 @@
-import { FC, ReactElement, useEffect } from "react"
+import { FC, ReactElement, useEffect, useRef } from "react"
 import { FilteredGroup, sorter } from "./grouper"
 import { palJson } from "../constants"
 import { useDispatch, useSelector } from "react-redux"
@@ -16,14 +16,16 @@ export const PassiveGroups: FC<Parameters> = ({
 }): ReactElement => {
   const groups = useSelector(mapStateToProps());
   const dispatch = useDispatch();
+  const scrollView = useRef(null);
+
   useEffect(() => {
     dispatch(populateFilteredAuras({filteredGroups: sorter(palJson)}));
   },[])
 
   return (
-  <ScrollView>
+  <ScrollView ref={scrollView}>
     {groups.map((i) => {
-      return <GroupList key={i} index={i}></GroupList>
+      return <GroupList key={i} index={i} scrollView={scrollView}></GroupList>
     })}
   </ScrollView>)
 }

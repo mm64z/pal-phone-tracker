@@ -7,6 +7,7 @@ export type Pal = {
   id: ID,
   name: string,
   image: string,
+  aura: string,
 }
 
 export type PalJson = {
