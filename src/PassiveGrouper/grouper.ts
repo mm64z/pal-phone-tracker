@@ -13,17 +13,29 @@ const groups: SearchItem[] = [{
   name: "Carrying Capacity",
   text: "carrying capacity",
 }, {
-  name: "Team buffs",
-  text: "While in team",
+  name: "Attack buffs",
+  text: "Wh(?:ile|en) in team, increases.*attack",
 }, {
   name: "Deployed buffs",
-  text: "When fighting together",
+  text: "Wh(?:ile|en) fighting together",
 }, {
-  name: "Mount",
-  text: "Can be ridden",
+  name: "Mining",
+  text: "mining",
+}, {
+  name: "Boost drops",
+  text: "drop more items",
+}, {
+  name: "Ground Mount",
+  text: "Can be ridden(?!.*flying)",
+}, {
+  name: "Glider",
+  text: "glider",
 }, {
   name: "Flying Mount",
   text: "flying mount",
+}, {
+  name: "Team buffs",
+  text: "Wh(?:ile|en) in team",
 }]
 
 // , {
@@ -42,8 +54,9 @@ export function sorter (palJson: PalJson[]): FilteredGroup[] {
   groups.map((group) => {
     const groupName = group.name;
     let matchingPals: Array<ID> = [];
+    const match = new RegExp(group.text, 'i')
     palJson.map((pal) => {
-      if (pal.aura.description.toLowerCase().includes(group.text.toLowerCase())) {
+      if (match.exec(pal.aura.description)) {
         matchingPals.push(pal.id);
       }
     })
