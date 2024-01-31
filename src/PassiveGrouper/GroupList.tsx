@@ -2,7 +2,7 @@ import { FC, ReactElement, Ref, useState } from "react"
 import { PassiveGroupState } from "./state/types";
 import { createSelector } from "@reduxjs/toolkit";
 import { FilteredGroup } from "./grouper";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import { Pal } from "./types";
 import { PalEntry } from "./PalEntry";
@@ -28,21 +28,24 @@ export const GroupList: FC<Parameters> = ({
 
   const iconSize = 20;
   return (<View style={styles.overall}>
-    <Text 
-      onPress={selected}
-      style={styles.rowHeader}
-      >{group} {expanded ? <Icon
+    <Pressable style={styles.rowHeader}
+        onPress={selected}>
+      <Text 
+        style={styles.headerText}
+        >{group}
+      </Text>
+      {expanded ? <Icon
         name="menu-up"
         size={iconSize}
         type="material-community"
         aria-label="close"
       /> : <Icon
-      name="menu-down"
-      size={iconSize}
-      type="material-community"
-      aria-label="open"
-    />}
-    </Text>
+        name="menu-down"
+        size={iconSize}
+        type="material-community"
+        aria-label="open"
+      />}
+    </Pressable>
     {expanded &&
     matchingPals.map((palId: ID, index) => {
       return (
@@ -68,10 +71,16 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
   },
   rowHeader: {
-    textAlign: 'center',
     padding: 10,
     fontSize: 20,
     borderBottomWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerText: {
+    textAlign: 'center',
+    fontSize: 20,
   },
   row: {
     flexDirection: 'row',

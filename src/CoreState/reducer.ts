@@ -16,12 +16,12 @@ const slice = createSlice({
 
 function loadAllPalsHandler (state: PalState, { payload }: PayloadAction<LoadAllPalsAction>) {
   const newPalMap: IdMap<Pal> = {};
-  palJson.map((pal: PalJson) => {
+  payload.allPalJson.map((pal: PalJson) => {
     const newPal: Pal = {
       id: pal.id,
       name: pal.name,
       image: palImages[pal.key],
-      aura: pal.aura.description,
+      aura: pal.aura,
     }
     // console.log("'" + pal.key + "': require('./" + pal.key + ".png'),");
     newPalMap[pal.id] = newPal;

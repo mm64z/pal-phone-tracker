@@ -1,9 +1,11 @@
-get pal names (might be manual, don't think api exists)
-search by name
-show/hide (esp when over 10?)
+publish as app
+ make icon, splash, adaptive
 
 other tabs
 search drops
+filter by suitability
+
+done
+---
 search passives
   group passives (aura) by type
-filter by suitability

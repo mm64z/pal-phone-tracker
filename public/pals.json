@@ -2,7 +2,7 @@
   {
     "id": 1,
     "key": "001",
-    "image": "/public/images/001.png",
+    "image": "/public/images/paldeck/001.png",
     "name": "Lamball",
     "wiki": "https://palworld.fandom.com/wiki/Lamball",
     "types": ["neutral"],
@@ -10,76 +10,80 @@
     "suitability": [
       {
         "type": "handiwork",
+        "image": "/public/images/works/handiwork.png",
         "level": 1
       },
       {
         "type": "transporting",
+        "image": "/public/images/works/transporting.png",
         "level": 1
       },
       {
         "type": "farming",
+        "image": "/public/images/works/farming.png",
         "level": 1
       }
     ],
-    "drops": ["Wool", "Lamball Mutton"],
+    "drops": ["wool", "lamball_mutton"],
     "aura": {
-      "name": "Fluffy Shield",
-      "description": "When activated, equips to the player and becomes a shield.\nSometimes drops Wool when assigned to Ranch."
+      "name": "fluffy_shield",
+      "description": "When activated, equips to the player and becomes a shield.\nSometimes drops Wool when assigned to Ranch.",
+      "tech": null
     },
     "description": "A walk up a hill tends to end with this Pal tumbling back down. This causes it to become dizzy and unable to move, making it easy to capture and kill. As a result, this pal has tumbled down to the very bottom of the food chain itself.",
     "skills": [
       {
         "level": 1,
-        "name": "Roly Poly",
-        "type": "Neutral",
+        "name": "roly_poly",
+        "type": "neutral",
         "cooldown": 1,
         "power": 35,
         "description": "Lamball's special skill. Curls into a ball, rolling after any enemies in its way. Becomes dizzy and unable to move after the attack ends.\n"
       },
       {
         "level": 7,
-        "name": "Air Cannon",
-        "type": "Neutral",
+        "name": "air_cannon",
+        "type": "neutral",
         "cooldown": 2,
         "power": 25,
         "description": "Quickly fires a burst of highly pressurized air.\n"
       },
       {
         "level": 15,
-        "name": "Power Shot",
-        "type": "Neutral",
+        "name": "power_shot",
+        "type": "neutral",
         "cooldown": 4,
         "power": 35,
         "description": "Charges energy into a focused blast.\n"
       },
       {
         "level": 22,
-        "name": "Implode",
-        "type": "Neutral",
+        "name": "implode",
+        "type": "neutral",
         "cooldown": 55,
         "power": 180,
         "description": "Risks its life to cause a violent explosion. Becomes incapacitated afterwards.\n"
       },
       {
         "level": 30,
-        "name": "Electric Ball",
-        "type": "Electric",
+        "name": "electric_ball",
+        "type": "electric",
         "cooldown": 9,
         "power": 50,
         "description": "Fires an electric ball that slowly pursues an enemy.\n"
       },
       {
         "level": 40,
-        "name": "Power Bomb",
-        "type": "Neutral",
+        "name": "power_bomb",
+        "type": "neutral",
         "cooldown": 15,
         "power": 70,
         "description": "Charges a massive amount of energy before firing a large destructive ball.\n"
       },
       {
         "level": 50,
-        "name": "Pal Blast",
-        "type": "Neutral",
+        "name": "pal_blast",
+        "type": "neutral",
         "cooldown": 55,
         "power": 150,
         "description": "Charges destructive energy before firing a high-powered beam forward across a wide area.\n"

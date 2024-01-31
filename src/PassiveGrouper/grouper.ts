@@ -13,16 +13,16 @@ const groups: SearchItem[] = [{
   name: "Carrying Capacity",
   text: "carrying capacity",
 }, {
-  name: "Attack buffs",
+  name: "Passive Attack Buffs",
   text: "Wh(?:ile|en) in team, increases.*attack",
 }, {
-  name: "Deployed buffs",
+  name: "Active Buffs",
   text: "Wh(?:ile|en) fighting together",
 }, {
   name: "Mining",
   text: "mining",
 }, {
-  name: "Boost drops",
+  name: "Boost Drops",
   text: "drop more items",
 }, {
   name: "Ground Mount",
@@ -34,7 +34,7 @@ const groups: SearchItem[] = [{
   name: "Flying Mount",
   text: "flying mount",
 }, {
-  name: "Team buffs",
+  name: "Passive Buffs",
   text: "Wh(?:ile|en) in team",
 }]
 

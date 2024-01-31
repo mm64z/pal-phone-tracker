@@ -5,6 +5,7 @@ import { ID } from "../types";
 import { createSelector } from "@reduxjs/toolkit";
 import { PalState } from "../CoreState/types";
 import { useSelector } from "react-redux";
+import { Icon } from "@rneui/themed";
 
 
 interface Parameters {
@@ -16,7 +17,7 @@ export const PalEntry: FC<Parameters> = ({
   id,
   index,
 }): ReactElement => {
-  const { name, image, aura } = useSelector(mapStateToProps(id))
+  const { name, image, aura, craft } = useSelector(mapStateToProps(id))
   const rowStyle = (index % 2) ? styles.evenRow : styles.oddRow;
   return (
     <View style={{...styles.row, ...rowStyle}}>
@@ -32,6 +33,14 @@ export const PalEntry: FC<Parameters> = ({
       >
         {aura}
       </Text>
+      <View style={styles.craft}>
+        {craft ? <Icon
+          name="hammer"
+          size={30}
+          type="material-community"
+          aria-label="craft required"
+        /> : <></>}
+      </View>
     </View>);
 
 }
@@ -45,7 +54,8 @@ const selectPalInfo = createSelector([selectCorePal],
     return {
       name: corePal.name,
       image: corePal.image,
-      aura: corePal.aura,
+      aura: corePal.aura.description,
+      craft: !!corePal.aura.tech,
     }
   });
 
@@ -75,5 +85,11 @@ const styles = StyleSheet.create({
   },
   aura: {
     flex: 6,
+  },
+  craft: {
+    flex: 1,
+    paddingRight: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 })

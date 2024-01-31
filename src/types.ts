@@ -7,7 +7,11 @@ export type Pal = {
   id: ID,
   name: string,
   image: string,
-  aura: string,
+  aura: {
+    name: string,
+    description: string,
+    tech: string,
+  },
 }
 
 export type PalJson = {
@@ -23,6 +27,7 @@ export type PalJson = {
   aura: {
     name: string,
     description: string,
+    tech: string,
   },
   description: string,
   skills: Array<any>, // todo
