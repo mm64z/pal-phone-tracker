@@ -28,8 +28,7 @@ export const CaughtTracker: FC<Parameters> = ({
   }
 
   return (
-    <Pressable style={{width:'100%', height: '80%'}} onPress={Keyboard.dismiss} accessible={false}>
-      <View style={{paddingVertical: 20, paddingHorizontal: 20, backgroundColor: '#ddd', width:'100%'}}>
+    <Pressable style={styles.overall} onPress={Keyboard.dismiss} accessible={false}>
         <Text style={{fontSize: 30}}>Track caught Pals</Text>
         <View style={{flexDirection: 'row'}}>
           <SearchBar containerStyle={styles.searchBar}
@@ -43,9 +42,6 @@ export const CaughtTracker: FC<Parameters> = ({
             return <ListEntry id={id} key={i}/>
           })}
         </ScrollView>
-        
-
-      </View>
     </Pressable>
   );
 };
@@ -73,6 +69,10 @@ const selectSearchText = ({ caught }: { caught: CaughtPalState}) => {
 }
 
 const styles = {
+  overall: {
+    backgroundColor: '#eee',
+    height: '100%',
+  },
   searchBar: {
     flex: 2,
     borderRadius: 10,

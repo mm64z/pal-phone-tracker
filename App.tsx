@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, StatusBar } from 'react-native';
+import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
 import { Provider } from 'react-redux';
 import store, { persistor } from './src/CoreState/store';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -26,22 +26,20 @@ export default function App() {
     // const loadedPalsCount = Object.keys(store.getState().core.allPals).length;
     // if (loadedPalsCount !== palJson.length) {
       store.dispatch(loadAllPals({
-        allPalJson: palJson,
+        allPalJson: palJson, 
       }))
     // }
   },[])
 
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={styles.tabNavigator}>
       <NavigationContainer>
         <Provider store={store}>
           <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
             {/* <SafeAreaView> */}
-              {/* <CaughtTracker></CaughtTracker> */}
-              {/* <Text>us</Text> */}
               <TabsDisplay></TabsDisplay>
               
-              <StatusBar style="auto" />
+              <ExpoStatusBar style="auto" />
             {/* </SafeAreaView> */}
           </PersistGate>
         </Provider>
@@ -59,7 +57,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tabNavigator: {
-    marginTop: 10,
-    backgroundColor: '#555',
+    marginTop: StatusBar.currentHeight,
   }
 });
