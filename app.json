@@ -28,6 +28,11 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "expo": {
+      "experiments": {
+        "baseUrl": "/pal-phone-tracker"
+      }
+    },
     "extra": {
       "eas": {
         "projectId": "a96031e0-a579-4af2-8da0-deb1a4d9d002"
