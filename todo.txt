@@ -4,6 +4,9 @@ publish as app
 other tabs
 search drops
 filter by suitability
+add to team
+ passives -> add to team
+ team browser - show team names, show pals in team
 
 done
 ---

@@ -3,6 +3,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { PassiveGroups } from "./src/PassiveGrouper/PassiveGroups";
 import { CaughtTracker } from "./src/CaughtList/CaughtTracker";
 import { SafeAreaView } from "react-native";
+import { TeamList } from "./src/TeamList/TeamList";
 
 
 export default function TabsDisplay() {
@@ -14,6 +15,7 @@ export default function TabsDisplay() {
       <Tab.Navigator>
         <Tab.Screen name="Caught Tracker" component={CaughtTracker} />
         <Tab.Screen name="Passive Groups" component={PassiveGroups} />
+        <Tab.Screen name="Team Builder" component={TeamList} />
       </Tab.Navigator>
     // </SafeAreaView>
   );

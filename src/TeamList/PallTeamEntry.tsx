@@ -1,26 +1,36 @@
-import { FC, ReactElement, useState } from "react"
-import { Pal } from "./types"
-import { View, Image, Text, StyleSheet, Modal, Pressable } from "react-native"
+import { FC, ReactElement } from "react"
+import { Pal } from "../PassiveGrouper/types"
+import { View, Image, Text, StyleSheet, Pressable } from "react-native"
 import { ID } from "../types";
 import { createSelector } from "@reduxjs/toolkit";
 import { PalState } from "../CoreState/types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Icon } from "@rneui/themed";
-import { AddToTeamDropdown } from "../TeamList/AddToTeamDropdown";
+import { deleteFromTeam } from "./state/reducer";
 
 
 interface Parameters {
   id: ID,
   index: number,
+  team: ID,
 }
 
-export const PalEntry: FC<Parameters> = ({
+export const PalTeamEntry: FC<Parameters> = ({
   id,
   index,
+  team,
 }): ReactElement => {
   const { name, image, aura, craft } = useSelector(mapStateToProps(id))
   const rowStyle = (index % 2) ? styles.evenRow : styles.oddRow;
-  const [modalOpen, setModalOpen] = useState(false);
+  const dispatch = useDispatch();
+
+  function removeThisEntry() {
+    dispatch(deleteFromTeam({
+      team: team,
+      pal: id,
+    }))
+  }
+
   return (
     <View style={{...styles.row, ...rowStyle}}>
       <Image
@@ -43,24 +53,15 @@ export const PalEntry: FC<Parameters> = ({
           aria-label="craft required"
         /> : <></>}
       </View>
-      <Pressable style={styles.add} onPress={() => setModalOpen(!modalOpen)}>
+      <Pressable style={styles.remove}
+        onPress={removeThisEntry}>
         <Icon
-          name="add"
-          size={30}
-          type="material"
-          aria-label="add to team">
+        name="delete"
+        size={30}
+        type="material"
+        aria-label="remove this pal from this team">
         </Icon>
       </Pressable>
-      <Modal animationType="slide"
-        transparent={true}
-        visible={modalOpen}
-        onRequestClose={() => {
-          setModalOpen(!modalOpen);
-        }}>
-        <AddToTeamDropdown pal={id} success={() => {
-          setModalOpen(!modalOpen)
-        }}></AddToTeamDropdown>
-      </Modal>
     </View>);
 
 }
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  add: {
+  remove: {
     flex: 1,
     paddingRight: 8,
     justifyContent: 'center',
