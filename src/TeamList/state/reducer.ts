@@ -29,7 +29,7 @@ function createTeamHandler (state: TeamListState, { payload }: PayloadAction<Cre
   const newTeam: Team = {
     id: newTeamId,
     name: "Team " + newTeamId,
-    pals: [payload.pal]
+    pals: payload.pal ? [payload.pal] : []
   };
   state.teams[newTeamId] = newTeam;
 }

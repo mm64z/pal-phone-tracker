@@ -1,13 +1,15 @@
 import { FC, ReactElement, Ref, useState } from "react"
 import { createSelector } from "@reduxjs/toolkit";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { ID, IdMap } from "../types";
 import { Icon } from "@rneui/base";
 import { Team, TeamListState } from "./state/types";
 import { PalEntry } from "../PassiveGrouper/PalEntry";
 import { PalTeamEntry } from "./PallTeamEntry";
-import { deleteTeam } from "./state/reducer";
+import { addToTeam, deleteTeam } from "./state/reducer";
+import { ChoosePalEntry } from "./ChoosePalEntry";
+import { ChoosePalList } from "./ChoosePalList";
 
 interface Parameters {
   index: ID,
@@ -19,6 +21,7 @@ export const TeamDisplay: FC<Parameters> = ({
   const [expanded, setExpanded] = useState(false);
   const team = useSelector(mapStateToProps(index));
   const dispatch = useDispatch();
+  const [modalOpen, setModalOpen] = useState(false);
 
   function selected () {
     setExpanded(!expanded);
@@ -61,11 +64,38 @@ export const TeamDisplay: FC<Parameters> = ({
         </Icon>
       </Pressable>
     </Pressable>
-    {expanded &&
-    team.pals.map((palId: ID, index) => {
-      return (
-      <PalTeamEntry id={palId} team={team.id} index={index} key={index}></PalTeamEntry>)
-    })}
+    {expanded && <View>
+      {team.pals.map((palId: ID, index) => {
+        return (
+        <PalTeamEntry id={palId} team={team.id} index={index} key={index}></PalTeamEntry>)
+      })}
+      <Pressable style={styles.button}
+       onPress={() => setModalOpen(!modalOpen)}>
+        <Icon
+          name="add"
+          size={iconSize}
+          type="material"
+          aria-label="delete team"
+        />
+        <Text>
+          Add Pal to Team
+        </Text>
+      </Pressable>
+      <Modal animationType="slide"
+        transparent={false}
+        visible={modalOpen}
+        onRequestClose={() => {
+          setModalOpen(!modalOpen);
+        }}>
+        <ChoosePalList success={(pal) => {
+          dispatch(addToTeam({
+            pal: pal,
+            team: team.id
+          }))
+          setModalOpen(!modalOpen)
+        }}></ChoosePalList>
+      </Modal>
+    </View>}
   </View>)
 }
 
@@ -110,5 +140,14 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
 
+  },
+  button: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 8,
+    marginHorizontal: 30,
+    backgroundColor: '#beb',
+    borderRadius: 10,
   },
 })

@@ -52,7 +52,7 @@ export const PalEntry: FC<Parameters> = ({
         </Icon>
       </Pressable>
       <Modal animationType="slide"
-        transparent={true}
+        transparent={false}
         visible={modalOpen}
         onRequestClose={() => {
           setModalOpen(!modalOpen);

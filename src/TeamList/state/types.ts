@@ -12,7 +12,7 @@ export interface TeamListState {
 }
 
 export interface CreateTeamAction {
-  pal: ID,
+  pal?: ID,
 }
 
 export interface AddToTeamAction {
