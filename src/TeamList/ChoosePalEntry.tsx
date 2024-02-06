@@ -1,13 +1,9 @@
-import { FC, ReactElement, useEffect } from "react";
-import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { Pal, ID } from "../types";
-import { useDispatch, useSelector } from "react-redux";
-import { Icon } from "@rneui/themed";
+import { FC, ReactElement } from "react";
+import { Image, Pressable, StyleSheet, Text } from "react-native";
+import { ID } from "../types";
+import { useSelector } from "react-redux";
 import { createSelector } from "@reduxjs/toolkit";
-import { updatePal } from "../CaughtList/reducers/reducer";
 import { PalState } from "../CoreState/types";
-import { CaughtPalState } from "../CaughtList/reducers/types";
-import store from "../CoreState/store";
 
 interface Parameters {
   id: ID,

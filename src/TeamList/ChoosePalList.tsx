@@ -3,12 +3,13 @@ import { Keyboard, Pressable, ScrollView, StyleSheet, Text, View } from 'react-n
 import { ListEntry } from '../CaughtList/ListEntry';
 import { ID, IdMap, Pal } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateSearch } from '../CaughtList/reducers/reducer';
 import { createSelector } from '@reduxjs/toolkit';
 import { SearchBar } from '@rneui/themed';
 import { CaughtPalState } from '../CaughtList/reducers/types';
 import { PalState } from '../CoreState/types';
 import { ChoosePalEntry } from './ChoosePalEntry';
+import { updateSearch } from './state/reducer';
+import { TeamListState } from './state/types';
 
 type Parameters = {
   // style: StyleSheet.NamedStyles<any>;
@@ -31,20 +32,21 @@ export const ChoosePalList: FC<Parameters> = ({
   }
 
   return (
-    <Pressable style={styles.overall} onPress={Keyboard.dismiss} accessible={false}>
-        <Text style={{fontSize: 30}}>Pick a Pal to Add</Text>
-        <View style={{flexDirection: 'row'}}>
-          <SearchBar containerStyle={styles.searchBar}
-            placeholder="Type Here..."
-            onChangeText={setSearchText}
-            value={searchText}>
-          </SearchBar>
-        </View>
-        <ScrollView>
-          {palList.map((id, i) => {
-            return <ChoosePalEntry id={id} key={i} success={success}/>
-          })}
-        </ScrollView>
+    <Pressable style={styles.overall} accessible={false}>
+      <Text style={{fontSize: 30}}>Pick a Pal to Add</Text>
+      <View style={{flexDirection: 'row'}}>
+        <SearchBar 
+          containerStyle={styles.searchBar}
+          placeholder="Type Here..."
+          onChangeText={setSearchText}
+          value={searchText}>
+        </SearchBar>
+      </View>
+      <ScrollView>
+        {palList.map((id, i) => {
+          return <ChoosePalEntry id={id} key={i} success={success}/>
+        })}
+      </ScrollView>
     </Pressable>
   );
 };
@@ -67,8 +69,8 @@ const selectAllPals = ({ core }: { core: PalState}) => {
   return core.allPals;
 }
 
-const selectSearchText = ({ caught }: { caught: CaughtPalState}) => {
-  return caught.searchText;
+const selectSearchText = ({ team }: { team: TeamListState}) => {
+  return team.searchText;
 }
 
 const styles = {

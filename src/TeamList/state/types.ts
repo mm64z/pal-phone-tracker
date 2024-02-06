@@ -9,6 +9,7 @@ export interface Team {
 
 export interface TeamListState {
   teams: IdMap<Team>;
+  searchText: string;
 }
 
 export interface CreateTeamAction {
@@ -32,4 +33,8 @@ export interface DeleteFromTeamAction {
 
 export interface DeleteTeamAction {
   team: ID,
+}
+
+export interface UpdateSearchAction {
+  text: string,
 }

@@ -74,6 +74,7 @@ export const ListEntry: FC<Parameters> = ({
           />
       </View>
       <TextInput
+        key={id}
         style={styles.numberInput}
         inputMode="numeric"
         textAlign="center"

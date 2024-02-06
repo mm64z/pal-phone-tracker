@@ -1,10 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AddToTeamAction, CreateTeamAction, DeleteFromTeamAction, DeleteTeamAction, Team, TeamListState } from "./types";
+import { AddToTeamAction, CreateTeamAction, DeleteFromTeamAction, DeleteTeamAction, Team, TeamListState, UpdateSearchAction, UpdateTeamAction } from "./types";
 
 const slice = createSlice({
   name: 'team',
   initialState: {
     teams: {},
+    searchText: '',
   },
   reducers: {
     createTeam: createTeamHandler,
@@ -12,6 +13,7 @@ const slice = createSlice({
     updateTeamName: updateTeamNameHandler,
     deleteFromTeam: deleteFromTeamHandler,
     deleteTeam: deleteTeamHandler,
+    updateSearch: updateSearchHandler,
   },
 });
 
@@ -39,7 +41,7 @@ function addToTeamHandler (state: TeamListState, { payload }: PayloadAction<AddT
 }
 
 function updateTeamNameHandler (state: TeamListState, { payload }: PayloadAction<UpdateTeamAction>) {
-  state.teams[payload.team].name = payload.name;
+  state.teams[payload.teamId].name = payload.name;
 }
 
 function deleteFromTeamHandler (state: TeamListState, { payload }: PayloadAction<DeleteFromTeamAction>) {
@@ -51,6 +53,10 @@ function deleteTeamHandler (state: TeamListState, { payload }: PayloadAction<Del
   delete state.teams[payload.team];
 }
 
+function updateSearchHandler (state: TeamListState, { payload }: PayloadAction<UpdateSearchAction>) {
+  state.searchText = payload.text;
+}
 
-export const { createTeam, addToTeam, updateTeamName, deleteFromTeam, deleteTeam } = slice.actions;
+
+export const { createTeam, addToTeam, updateTeamName, deleteFromTeam, deleteTeam, updateSearch } = slice.actions;
 export const TeamListReducer = slice.reducer;

@@ -28,10 +28,12 @@ export const CaughtTracker: FC<Parameters> = ({
   }
 
   return (
-    <Pressable style={styles.overall} onPress={Keyboard.dismiss} accessible={false}>
+    // <Pressable style={styles.overall} onPress={Keyboard.dismiss} accessible={false}>
+    <Pressable style={styles.overall} accessible={false}>
         <Text style={{fontSize: 30}}>Track caught Pals</Text>
         <View style={{flexDirection: 'row'}}>
-          <SearchBar containerStyle={styles.searchBar}
+          <SearchBar 
+            containerStyle={styles.searchBar}
             placeholder="Type Here..."
             onChangeText={setSearchText}
             value={searchText}>
