@@ -12,6 +12,9 @@ export type Pal = {
     description: string,
     tech: string,
   },
+  suitability: Array<{type: string, level: number}>,
+  food: number,
+
 }
 
 export type PalJson = {
@@ -31,4 +34,20 @@ export type PalJson = {
   },
   description: string,
   skills: Array<any>, // todo
+  stats: {
+    hp: number,
+    attack: {
+      melee: number,
+      ranged: number
+    },
+    defense: number,
+    speed: {
+      ride: number,
+      run: number,
+      walk: number,
+    },
+    stamina:number,
+    support: number,
+    food: number
+  }
 }

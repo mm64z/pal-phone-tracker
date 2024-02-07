@@ -5,6 +5,7 @@ import { persistStore, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persis
 import { PalReducer } from './reducer';
 import { AuraFilterReducer } from '../PassiveGrouper/state/reducer';
 import { TeamListReducer } from '../TeamList/state/reducer';
+import { WorkFilterReducer } from '../WorkFilter/state/reducer';
 
 const persistConfig = {
   key: 'root',
@@ -19,6 +20,7 @@ const persistedReducer = persistCombineReducers(persistConfig, {
   caught: PalCaughtReducer,
   aura: AuraFilterReducer,
   team: TeamListReducer,
+  work: WorkFilterReducer,
 });
 
 const store = configureStore({

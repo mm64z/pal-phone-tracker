@@ -25,9 +25,10 @@ export default function App() {
   useEffect(() => {
     // const loadedPalsCount = Object.keys(store.getState().core.allPals).length;
     // if (loadedPalsCount !== palJson.length) {
-      store.dispatch(loadAllPals({
-        allPalJson: palJson, 
-      }))
+    // TODO version json, only load if that updates
+    store.dispatch(loadAllPals({
+      allPalJson: palJson, 
+    }))
     // }
   },[])
 
