@@ -80,6 +80,10 @@ const mapStateToProps = () => {
           })
         })
       }
+
+      somePalsMatch.sort((palA, palB) => {
+        return palA.suitability.length - palB.suitability.length;
+      })
       
       return {
         matchingPalIDs: somePalsMatch.map((pal) => pal.id),
