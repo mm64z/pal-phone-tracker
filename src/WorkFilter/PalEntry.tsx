@@ -7,6 +7,8 @@ import { PalState } from "../CoreState/types";
 import { useSelector } from "react-redux";
 import { Icon } from "@rneui/themed";
 import { AddToTeamDropdown } from "../TeamList/AddToTeamDropdown";
+import { ImageNumber } from "./ImageNumber";
+import { hungerImage, workImages } from "../../public/work-images";
 
 
 interface Parameters {
@@ -18,7 +20,7 @@ export const PalEntry: FC<Parameters> = ({
   id,
   index,
 }): ReactElement => {
-  const { name, image, hunger } = useSelector(mapStateToProps(id))
+  const { name, image, hunger, suitability } = useSelector(mapStateToProps(id))
   const rowStyle = (index % 2) ? styles.evenRow : styles.oddRow;
   return (
     <View style={{...styles.row, ...rowStyle}}>
@@ -29,9 +31,13 @@ export const PalEntry: FC<Parameters> = ({
       <Text
         style={styles.name}
       >{name}</Text>
-      <Text>
-        hungy {hunger}
-      </Text>
+      {suitability.map((work, i) => {
+        return <ImageNumber key={i} image={workImages[work.type]} level={work.level}></ImageNumber>
+      })}
+
+      <View style={styles.hunger}>
+        <ImageNumber image={hungerImage} level={hunger}/>
+      </View>
     </View>);
 
 }
@@ -46,6 +52,7 @@ const selectPalInfo = createSelector([selectCorePal],
       name: corePal.name,
       image: corePal.image,
       hunger: corePal.food,
+      suitability: corePal.suitability,
     }
   });
 
@@ -57,6 +64,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     padding: 1,
+    alignItems: 'center',
   },
   evenRow: {
     backgroundColor: '#DADADA',
@@ -71,7 +79,8 @@ const styles = StyleSheet.create({
   name: {
     flex: 2,
     padding: 5,
-    textAlign: 'center',
+    textAlign: 'left',
+    paddingLeft: 10,
   },
   aura: {
     flex: 6,
@@ -87,5 +96,11 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
+  hunger: {
+    justifyContent: 'center',
+    paddingRight: 5,
+    // borderLeftWidth: 1,
+    paddingLeft: 6,
+  },
 })
