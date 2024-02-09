@@ -14,6 +14,12 @@ const slice = createSlice({
   },
 });
 
+function dropTransform (dropsArray: string[]) {
+  return dropsArray.map((drop) => {
+    return drop.replaceAll('_', ' ');
+  })
+}
+
 function loadAllPalsHandler (state: PalState, { payload }: PayloadAction<LoadAllPalsAction>) {
   const newPalMap: IdMap<Pal> = {};
   payload.allPalJson.map((pal: PalJson) => {
@@ -24,6 +30,7 @@ function loadAllPalsHandler (state: PalState, { payload }: PayloadAction<LoadAll
       aura: pal.aura,
       food: pal.stats.food,
       suitability: pal.suitability,
+      drops: dropTransform(pal.drops),
     }
     // console.log("'" + pal.key + "': require('./" + pal.key + ".png'),");
     newPalMap[pal.id] = newPal;

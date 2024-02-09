@@ -5,6 +5,7 @@ import { CaughtTracker } from "./src/CaughtList/CaughtTracker";
 import { SafeAreaView } from "react-native";
 import { TeamList } from "./src/TeamList/TeamList";
 import { WorkFilter } from "./src/WorkFilter/WorkFilter";
+import { DropsSearcher } from "./src/DropsSearcher/DropsSearcher";
 
 
 export default function TabsDisplay() {
@@ -18,6 +19,7 @@ export default function TabsDisplay() {
         <Tab.Screen name="Passive Groups" component={PassiveGroups} />
         <Tab.Screen name="Team Builder" component={TeamList} />
         <Tab.Screen name="Work Filter" component={WorkFilter} />
+        <Tab.Screen name="Drops Searcher" component={DropsSearcher} />
       </Tab.Navigator>
     // </SafeAreaView>
   );

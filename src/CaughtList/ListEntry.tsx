@@ -4,9 +4,9 @@ import { Pal, ID } from "../types";
 import { useDispatch, useSelector } from "react-redux";
 import { Icon } from "@rneui/themed";
 import { createSelector } from "@reduxjs/toolkit";
-import { updatePal } from "./reducers/reducer";
+import { updatePal } from "./state/reducer";
 import { PalState } from "../CoreState/types";
-import { CaughtPalState } from "./reducers/types";
+import { CaughtPalState } from "./state/types";
 import store from "../CoreState/store";
 
 interface Parameters {

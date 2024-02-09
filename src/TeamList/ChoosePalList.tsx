@@ -5,7 +5,7 @@ import { ID, IdMap, Pal } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 import { SearchBar } from '@rneui/themed';
-import { CaughtPalState } from '../CaughtList/reducers/types';
+import { CaughtPalState } from '../CaughtList/state/types';
 import { PalState } from '../CoreState/types';
 import { ChoosePalEntry } from './ChoosePalEntry';
 import { updateSearch } from './state/reducer';

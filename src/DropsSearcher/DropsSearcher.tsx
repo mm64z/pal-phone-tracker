@@ -1,13 +1,14 @@
 import React, { FC, ReactElement } from 'react';
 import { Keyboard, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { ListEntry } from './ListEntry';
+
 import { ID, IdMap, Pal } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateSearch } from './state/reducer';
 import { createSelector } from '@reduxjs/toolkit';
 import { SearchBar } from '@rneui/themed';
-import { CaughtPalState } from './state/types';
 import { PalState } from '../CoreState/types';
+import { DropsSearcherState } from './state/types';
+import { updateSearch } from './state/reducer';
+import { PalEntry } from './PalEntry';
 
 type Parameters = {
   // style: StyleSheet.NamedStyles<any>;
@@ -17,7 +18,7 @@ type State = {
   palList: Array<ID>,
 }
 
-export const CaughtTracker: FC<Parameters> = ({
+export const DropsSearcher: FC<Parameters> = ({
 }): ReactElement => {
   const { palList }: State = useSelector(mapStateToProps());
   const searchText: string = useSelector(selectSearchText);
@@ -30,7 +31,7 @@ export const CaughtTracker: FC<Parameters> = ({
   return (
     // <Pressable style={styles.overall} onPress={Keyboard.dismiss} accessible={false}>
     <Pressable style={styles.overall} accessible={false}>
-        <Text style={{fontSize: 30}}>Track caught Pals</Text>
+        <Text style={{fontSize: 30}}>Search Drops</Text>
         <View style={{flexDirection: 'row'}}>
           <SearchBar 
             containerStyle={styles.searchBar}
@@ -41,7 +42,7 @@ export const CaughtTracker: FC<Parameters> = ({
         </View>
         <ScrollView>
           {palList.map((id, i) => {
-            return <ListEntry id={id} key={i}/>
+            return <PalEntry id={id} key={i} index={i}/>
           })}
         </ScrollView>
     </Pressable>
@@ -54,10 +55,16 @@ const mapStateToProps = () => {
       selectSearchText
     ],
     (allPals: IdMap<Pal>, searchText: string) => {
-      const filteredList = (searchText === '') ? Object.values(allPals) : 
-        Object.values(allPals).filter((pal: Pal) => (pal.name.toLowerCase().includes(searchText.toLowerCase())));
-      return {
-        palList: filteredList.map ((pal) => pal.id)
+      if (searchText === "") {
+        return {palList: []}
+      } else {
+        const regex = new RegExp(searchText, 'i');
+        const palList = Object.values(allPals).filter((pal) => {
+          return pal.drops.some((drop) => {
+            return regex.exec(drop)
+          })
+        }).map((pal) => pal.id)
+        return { palList: palList };
       }
   })
 }
@@ -66,8 +73,8 @@ const selectAllPals = ({ core }: { core: PalState}) => {
   return core.allPals;
 }
 
-const selectSearchText = ({ caught }: { caught: CaughtPalState}) => {
-  return caught.searchText;
+const selectSearchText = ({ drops }: { drops: DropsSearcherState}) => {
+  return drops.searchText;
 }
 
 const styles = {
@@ -80,14 +87,4 @@ const styles = {
     borderRadius: 10,
     margin: 2,
   },
-  addButton: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#2196F3',
-    alignItems: 'center' as const,
-    justifyContent: 'center',
-    paddingVertical: 5,
-    borderRadius: 10,
-    margin: 2,
-  }
 }

@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { PalCaughtReducer } from '../CaughtList/reducers/reducer';
+import { PalCaughtReducer } from '../CaughtList/state/reducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistStore, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistCombineReducers } from 'redux-persist'
 import { PalReducer } from './reducer';
 import { AuraFilterReducer } from '../PassiveGrouper/state/reducer';
 import { TeamListReducer } from '../TeamList/state/reducer';
 import { WorkFilterReducer } from '../WorkFilter/state/reducer';
+import { DropSearcherReducer } from '../DropsSearcher/state/reducer';
 
 const persistConfig = {
   key: 'root',
@@ -21,6 +22,7 @@ const persistedReducer = persistCombineReducers(persistConfig, {
   aura: AuraFilterReducer,
   team: TeamListReducer,
   work: WorkFilterReducer,
+  drops: DropSearcherReducer,
 });
 
 const store = configureStore({
