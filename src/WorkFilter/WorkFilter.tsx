@@ -2,7 +2,7 @@ import { FC, ReactElement, useEffect, useRef, useState } from "react"
 import { palJson } from "../constants"
 import { useDispatch, useSelector } from "react-redux"
 import { createSelector } from "@reduxjs/toolkit"
-import { ScrollView, StyleSheet, Text, View } from "react-native"
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native"
 import { GroupList } from "./GroupList"
 import { WORK_TYPE, WorkFilterState, WorkType } from "./state/types"
 import { PalState } from "../CoreState/types"
@@ -27,7 +27,7 @@ export const WorkFilter: FC<Parameters> = ({
   }
 
   return (
-    <View>
+    <View style={styles.overall}>
       <View style={styles.iconList}>
         {Object.values(WORK_TYPE).map((workType, i) => {
           return <WorkTogglable key={i} type={workType}></WorkTogglable>
@@ -94,6 +94,10 @@ const mapStateToProps = () => {
 }
 
 const styles = StyleSheet.create({
+  overall: {
+    backgroundColor: '#eee',
+    height: '100%',
+  },
   iconList: {
     flexDirection: 'row',
     flexWrap: 'wrap',
