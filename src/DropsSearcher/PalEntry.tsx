@@ -79,5 +79,6 @@ const styles = StyleSheet.create({
   },
   text: {
     textTransform: 'capitalize',
+    paddingRight: 10,
   }
 })
