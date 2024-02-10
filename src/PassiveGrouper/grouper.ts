@@ -4,6 +4,7 @@ import { Pal } from "./types";
 interface SearchItem {
   name: string;
   text: string;
+  extra?: string;
 }
 
 const groups: SearchItem[] = [{
@@ -27,12 +28,15 @@ const groups: SearchItem[] = [{
 }, {
   name: "Ground Mount",
   text: "Can be ridden(?!.*flying)",
+  extra: 'speed.ride',
 }, {
   name: "Glider",
   text: "glider",
+  extra: 'speed.ride',
 }, {
   name: "Flying Mount",
   text: "flying mount",
+  extra: 'speed.ride',
 }, {
   name: "Passive Buffs",
   text: "Wh(?:ile|en) in team",
@@ -45,6 +49,7 @@ const groups: SearchItem[] = [{
 
 export interface FilteredGroup {
   group: string,
+  extra?: string,
   matchingPals: Array<ID>
 }
 
@@ -62,6 +67,7 @@ export function sorter (palJson: PalJson[]): FilteredGroup[] {
     })
     sortedGroups.push({
       group: groupName,
+      extra: group.extra,
       matchingPals: matchingPals,
     })
   })

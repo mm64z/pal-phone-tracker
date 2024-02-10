@@ -12,13 +12,15 @@ import { AddToTeamDropdown } from "../TeamList/AddToTeamDropdown";
 interface Parameters {
   id: ID,
   index: number,
+  extra: string,
 }
 
 export const PalEntry: FC<Parameters> = ({
   id,
   index,
+  extra,
 }): ReactElement => {
-  const { name, image, aura, craft } = useSelector(mapStateToProps(id))
+  const { name, image, aura, craft, extraText } = useSelector(mapStateToProps(id, extra))
   const rowStyle = (index % 2) ? styles.evenRow : styles.oddRow;
   const [modalOpen, setModalOpen] = useState(false);
   return (
@@ -35,6 +37,9 @@ export const PalEntry: FC<Parameters> = ({
       >
         {aura}
       </Text>
+      {extra && <Text>
+        ({extraText})
+        </Text>}
       <View style={styles.craft}>
         {craft ? <Icon
           name="hammer"
@@ -68,19 +73,27 @@ export const PalEntry: FC<Parameters> = ({
 const selectId = (state, id) => id;
 const selectCorePals = ({ core }: { core: PalState }) => core.allPals;
 const selectCorePal = createSelector([selectCorePals, selectId], (corePals, id) => corePals[id])
+const selectExtra = (state, id, extra) => extra;
 
-const selectPalInfo = createSelector([selectCorePal], 
-  (corePal) => {
+function extractInfo (obj, str) {
+  return str.split('.').reduce((value, acc) => {
+    return value[acc];
+  }, obj)
+}
+
+const selectPalInfo = createSelector([selectCorePal, selectExtra], 
+  (corePal, extra) => {
     return {
       name: corePal.name,
       image: corePal.image,
       aura: corePal.aura.description,
       craft: !!corePal.aura.tech,
+      extraText: extra ? extractInfo(corePal, extra) : undefined,
     }
   });
 
-const mapStateToProps = (id: ID) => {
-  return (state) => selectPalInfo(state, id);
+const mapStateToProps = (id: ID, extra: string) => {
+  return (state) => selectPalInfo(state, id, extra);
 }
 
 const styles = StyleSheet.create({

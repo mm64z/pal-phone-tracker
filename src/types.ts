@@ -15,6 +15,11 @@ export type Pal = {
   suitability: Array<{type: string, level: number}>,
   food: number,
   drops: Array<string>,
+  speed: {
+    ride: number,
+    run: number,
+    walk: number,
+  },
 }
 
 export type PalJson = {

@@ -19,7 +19,7 @@ export const GroupList: FC<Parameters> = ({
   scrollView,
 }): ReactElement => {
   const [expanded, setExpanded] = useState(false);
-  const {group, matchingPals} = useSelector(mapStateToProps(index));
+  const {group, extra, matchingPals} = useSelector(mapStateToProps(index));
 
   function selected () {
     setExpanded(!expanded);
@@ -49,7 +49,7 @@ export const GroupList: FC<Parameters> = ({
     {expanded &&
     matchingPals.map((palId: ID, index) => {
       return (
-      <PalEntry id={palId} index={index} key={index}></PalEntry>)
+      <PalEntry id={palId} index={index} key={index} extra={extra}></PalEntry>)
     })}
   </View>)
 }

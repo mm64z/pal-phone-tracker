@@ -31,6 +31,7 @@ function loadAllPalsHandler (state: PalState, { payload }: PayloadAction<LoadAll
       food: pal.stats.food,
       suitability: pal.suitability,
       drops: dropTransform(pal.drops),
+      speed: pal.stats.speed,
     }
     // console.log("'" + pal.key + "': require('./" + pal.key + ".png'),");
     newPalMap[pal.id] = newPal;
