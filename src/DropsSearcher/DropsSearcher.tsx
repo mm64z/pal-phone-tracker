@@ -9,6 +9,9 @@ import { PalState } from '../CoreState/types';
 import { DropsSearcherState } from './state/types';
 import { updateSearch } from './state/reducer';
 import { PalEntry } from './PalEntry';
+import { PassiveGroupState } from '../PassiveGrouper/state/types';
+import { PalRanchEntry } from './PalRanchEntry';
+import { extractLastSentence, extractRanchSentence } from './utils';
 
 type Parameters = {
   // style: StyleSheet.NamedStyles<any>;
@@ -16,11 +19,12 @@ type Parameters = {
 
 type State = {
   palList: Array<ID>,
+  ranchPals: Array<ID>,
 }
 
 export const DropsSearcher: FC<Parameters> = ({
 }): ReactElement => {
-  const { palList }: State = useSelector(mapStateToProps());
+  const { palList, ranchPals }: State = useSelector(mapStateToProps());
   const searchText: string = useSelector(selectSearchText);
   const dispatch = useDispatch();
 
@@ -41,6 +45,9 @@ export const DropsSearcher: FC<Parameters> = ({
           </SearchBar>
         </View>
         <ScrollView>
+          {ranchPals.map((id, i) => {
+            return <PalRanchEntry id={id} key={i} index={i}/>
+          })}
           {palList.map((id, i) => {
             return <PalEntry id={id} key={i} index={i}/>
           })}
@@ -52,11 +59,12 @@ export const DropsSearcher: FC<Parameters> = ({
 const mapStateToProps = () => {
   return createSelector([
       selectAllPals,
-      selectSearchText
+      selectSearchText,
+      selectRanchPals,
     ],
-    (allPals: IdMap<Pal>, searchText: string) => {
+    (allPals: IdMap<Pal>, searchText: string, allRanchPals: Array<ID>) => {
       if (searchText === "") {
-        return {palList: []}
+        return {palList: [], ranchPals: []}
       } else {
         const regex = new RegExp(searchText, 'i');
         const palList = Object.values(allPals).filter((pal) => {
@@ -64,7 +72,11 @@ const mapStateToProps = () => {
             return regex.exec(drop)
           })
         }).map((pal) => pal.id)
-        return { palList: palList };
+
+        const ranchPals = allRanchPals.filter((id) => {
+          return regex.exec(extractRanchSentence(allPals[id].aura.description));
+        })
+        return { palList: palList, ranchPals: ranchPals };
       }
   })
 }
@@ -75,6 +87,11 @@ const selectAllPals = ({ core }: { core: PalState}) => {
 
 const selectSearchText = ({ drops }: { drops: DropsSearcherState}) => {
   return drops.searchText;
+}
+
+const selectRanchPals = ({ aura }: { aura: PassiveGroupState}) => {
+  // hmmm
+  return aura.filteredGroups.filter((group) => group.group === "Ranch")[0].matchingPals;
 }
 
 const styles = {

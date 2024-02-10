@@ -1,20 +1,27 @@
 import { FC, ReactElement, useState } from "react"
+import { Pal } from "./types"
 import { View, Image, Text, StyleSheet, Modal, Pressable } from "react-native"
 import { ID } from "../types";
 import { createSelector } from "@reduxjs/toolkit";
 import { PalState } from "../CoreState/types";
 import { useSelector } from "react-redux";
+import { Icon } from "@rneui/themed";
+import { AddToTeamDropdown } from "../TeamList/AddToTeamDropdown";
+import { ImageNumber } from "./ImageNumber";
+import { hungerImage, workImages } from "../../public/work-images";
+import { extractLastSentence, extractRanchSentence } from "./utils";
+
 
 interface Parameters {
   id: ID,
   index: number,
 }
 
-export const PalEntry: FC<Parameters> = ({
+export const PalRanchEntry: FC<Parameters> = ({
   id,
   index,
 }): ReactElement => {
-  const { name, image, drops} = useSelector(mapStateToProps(id))
+  const { name, image, aura} = useSelector(mapStateToProps(id))
   const rowStyle = (index % 2) ? styles.evenRow : styles.oddRow;
   return (
     <View style={{...styles.row, ...rowStyle}}>
@@ -26,7 +33,7 @@ export const PalEntry: FC<Parameters> = ({
         style={styles.name}
       >{name}</Text>
       <Text style={styles.text}>
-        {drops.join(', ')}
+        {aura}
       </Text>
     </View>);
 
@@ -41,7 +48,7 @@ const selectPalInfo = createSelector([selectCorePal],
     return {
       name: corePal.name,
       image: corePal.image,
-      drops: corePal.drops,
+      aura: extractRanchSentence(corePal.aura.description),
     }
   });
 
