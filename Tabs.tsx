@@ -6,6 +6,8 @@ import { SafeAreaView } from "react-native";
 import { TeamList } from "./src/TeamList/TeamList";
 import { WorkFilter } from "./src/WorkFilter/WorkFilter";
 import { DropsSearcher } from "./src/DropsSearcher/DropsSearcher";
+import { BossTimerReducer } from "./src/BossTimer/state/reducer";
+import { BossTimer } from "./src/BossTimer/BossTimer";
 
 
 export default function TabsDisplay() {
@@ -20,6 +22,7 @@ export default function TabsDisplay() {
         <Tab.Screen name="Team Builder" component={TeamList} />
         <Tab.Screen name="Work Filter" component={WorkFilter} />
         <Tab.Screen name="Drops Searcher" component={DropsSearcher} />
+        <Tab.Screen name="Boss Timer" component={BossTimer} />
       </Tab.Navigator>
     // </SafeAreaView>
   );

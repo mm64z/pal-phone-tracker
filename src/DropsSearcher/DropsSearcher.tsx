@@ -91,7 +91,7 @@ const selectSearchText = ({ drops }: { drops: DropsSearcherState}) => {
 
 const selectRanchPals = ({ aura }: { aura: PassiveGroupState}) => {
   // hmmm
-  return aura.filteredGroups.filter((group) => group.group === "Ranch")[0].matchingPals;
+  return aura.filteredGroups.filter((group) => group.group === "Ranch")[0]?.matchingPals;
 }
 
 const styles = {

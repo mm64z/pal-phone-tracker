@@ -9,6 +9,7 @@ import { palJson } from './src/constants';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import TabsDisplay from './Tabs';
+import { AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown';
 
 export default function App() {
   

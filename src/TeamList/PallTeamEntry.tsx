@@ -56,10 +56,10 @@ export const PalTeamEntry: FC<Parameters> = ({
       <Pressable style={styles.remove}
         onPress={removeThisEntry}>
         <Icon
-        name="delete"
-        size={30}
-        type="material"
-        aria-label="remove this pal from this team">
+          name="delete"
+          size={30}
+          type="material"
+          aria-label="remove this pal from this team">
         </Icon>
       </Pressable>
     </View>);
