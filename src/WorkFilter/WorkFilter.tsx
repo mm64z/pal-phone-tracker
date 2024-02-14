@@ -1,14 +1,12 @@
-import { FC, ReactElement, useEffect, useRef, useState } from "react"
-import { palJson } from "../constants"
+import { FC, ReactElement, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { createSelector } from "@reduxjs/toolkit"
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native"
-import { GroupList } from "./GroupList"
+import { ScrollView, StyleSheet, View } from "react-native"
 import { WORK_TYPE, WorkFilterState, WorkType } from "./state/types"
 import { PalState } from "../CoreState/types"
 import { IdMap, Pal } from "../types"
 import { PalEntry } from "./PalEntry"
-import { CheckBox, Image } from "@rneui/themed"
+import { CheckBox } from "@rneui/themed"
 import { WorkTogglable } from "./WorkToggable"
 import { updateExclusiveFilter } from "./state/reducer"
 
@@ -28,15 +26,24 @@ export const WorkFilter: FC<Parameters> = ({
 
   return (
     <View style={styles.overall}>
-      <View style={styles.iconList}>
-        {Object.values(WORK_TYPE).map((workType, i) => {
-          return <WorkTogglable key={i} type={workType}></WorkTogglable>
-        })}
+      <View>
+        <View style={styles.iconList}>
+          {Object.values(WORK_TYPE).slice(0, Object.values(WORK_TYPE).length/2).map((workType, i) => {
+            return <WorkTogglable key={i} work={workType}></WorkTogglable>
+          })}
+        </View>
+        <View style={styles.iconList}>
+          {Object.values(WORK_TYPE).slice(Object.values(WORK_TYPE).length/2).map((workType, i) => {
+            return <WorkTogglable key={i} work={workType}></WorkTogglable>
+          })}
+        </View>
+        <View>
         <CheckBox 
-          containerStyle={{backgroundColor: 'transparent'}}
+          containerStyle={{backgroundColor: 'transparent', paddingVertical: 4}}
           onPress={toggleOnlyFilter} 
           checked={exclusiveFilter}
           title="Only" />
+        </View>
       </View>
       <ScrollView ref={scrollView}>
         {matchingPalIDs.map((id, i) => {
@@ -68,15 +75,16 @@ const mapStateToProps = () => {
       let somePalsMatch = Object.values(allPals).filter((pal) => {
         return filters.every((filter) => {
           return pal.suitability.some((palWork) => {
-            return palWork.type === filter;
+            return palWork.type === filter.type;
           })
         })
       });
 
       if (exclusive) {
+        const filtersType = filters.map(filter => filter.type);
         somePalsMatch = somePalsMatch.filter((pal) => {
           return pal.suitability.every((palWork) => {
-            return filters.includes(palWork.type)
+            return filtersType.includes(palWork.type)
           })
         })
       }
@@ -100,6 +108,7 @@ const styles = StyleSheet.create({
   },
   iconList: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap',
+    paddingVertical: 4
   }
 })

@@ -1,7 +1,5 @@
 import { FC, ReactElement } from "react"
-import { WorkType } from "./state/types"
 import { View, Image, Text, StyleSheet, ImageSourcePropType } from "react-native"
-import { workImages } from "../../public/work-images"
 
 interface Parameters {
   image: ImageSourcePropType,

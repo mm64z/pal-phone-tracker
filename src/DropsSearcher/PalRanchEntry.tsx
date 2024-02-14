@@ -1,15 +1,10 @@
-import { FC, ReactElement, useState } from "react"
-import { Pal } from "./types"
-import { View, Image, Text, StyleSheet, Modal, Pressable } from "react-native"
+import { FC, ReactElement } from "react"
+import { View, Image, Text, StyleSheet } from "react-native"
 import { ID } from "../types";
 import { createSelector } from "@reduxjs/toolkit";
 import { PalState } from "../CoreState/types";
 import { useSelector } from "react-redux";
-import { Icon } from "@rneui/themed";
-import { AddToTeamDropdown } from "../TeamList/AddToTeamDropdown";
-import { ImageNumber } from "./ImageNumber";
-import { hungerImage, workImages } from "../../public/work-images";
-import { extractLastSentence, extractRanchSentence } from "./utils";
+import { extractRanchSentence } from "./utils";
 
 
 interface Parameters {
@@ -23,6 +18,7 @@ export const PalRanchEntry: FC<Parameters> = ({
 }): ReactElement => {
   const { name, image, aura} = useSelector(mapStateToProps(id))
   const rowStyle = (index % 2) ? styles.evenRow : styles.oddRow;
+
   return (
     <View style={{...styles.row, ...rowStyle}}>
       <Image

@@ -25,7 +25,7 @@ function addFilterHandler (state: WorkFilterState, { payload }: PayloadAction<Ad
 }
 
 function removeFilterHandler (state: WorkFilterState, { payload }: PayloadAction<RemoveFilterAction>) {
-  state.activeFilters = state.activeFilters.filter((filter) => filter !== payload.filter);
+  state.activeFilters = state.activeFilters.filter((filter) => filter.type !== payload.filter.type);
 }
 
 function updateExclusiveFilterHandler (state: WorkFilterState, { payload }: PayloadAction<UpdateExclusiveFilterAction>) {

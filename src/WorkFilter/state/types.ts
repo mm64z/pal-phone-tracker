@@ -3,21 +3,60 @@ export interface WorkFilterState {
   exclusiveFilter: boolean,
 }
 
-export type WorkType = string;
+export type WorkType = {
+  label: string,
+  type: string,
+};
 
 export const WORK_TYPE = {
-  KINDLING: "kindling",
-  GENERATING_ELECTRICITY: "generating_electricity",
-  PLANTING: "planting",
-  WATERING: "watering",
-  GATHERING: "gathering",
-  HANDIWORK: "handiwork",
-  LUMBERING: "lumbering",
-  MINING: "mining",
-  MEDICINE_PRODUCTION: "medicine_production",
-  COOLING: "cooling",
-  TRANSPORTING: "transporting",
-  FARMING: "farming",
+  KINDLING: {
+    label: "kindling",
+    type: "kindling",
+  },
+  GENERATING_ELECTRICITY: {
+    label: "electricity",
+    type: "generating_electricity",
+  },
+  PLANTING: {
+    label: "planting",
+    type: "planting",
+  },
+  WATERING: {
+    label: "watering",
+    type: "watering",
+  },
+  GATHERING: {
+    label: "gathering",
+    type: "gathering",
+  },
+  HANDIWORK: {
+    label: "handiwork",
+    type: "handiwork",
+  },
+  LUMBERING: {
+    label: "lumbering",
+    type: "lumbering",
+  },
+  MINING: {
+    label: "mining",
+    type: "mining",
+  },
+  MEDICINE_PRODUCTION: {
+    label: "medicine",
+    type: "medicine_production",
+  },
+  COOLING: {
+    label: "cooling",
+    type: "cooling",
+  },
+  TRANSPORTING: {
+    label: "transporting",
+    type: "transporting",
+  },
+  FARMING: {
+    label: "farming",
+    type: "farming",
+  },
 }
 
 export interface UpdateFiltersAction {

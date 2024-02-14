@@ -34,25 +34,27 @@ export const DropsSearcher: FC<Parameters> = ({
 
   return (
     // <Pressable style={styles.overall} onPress={Keyboard.dismiss} accessible={false}>
-    <Pressable style={styles.overall} accessible={false}>
-        <Text style={{fontSize: 30}}>Search Drops</Text>
-        <View style={{flexDirection: 'row'}}>
-          <SearchBar 
-            containerStyle={styles.searchBar}
-            placeholder="Type Here..."
-            onChangeText={setSearchText}
-            value={searchText}>
-          </SearchBar>
-        </View>
-        <ScrollView>
-          {ranchPals.map((id, i) => {
-            return <PalRanchEntry id={id} key={i} index={i}/>
-          })}
-          {palList.map((id, i) => {
-            return <PalEntry id={id} key={i} index={i}/>
-          })}
-        </ScrollView>
-    </Pressable>
+    <View style={styles.overall} accessible={false}>
+      <Text style={{fontSize: 30}}>Search for Materials</Text>
+      <View style={{flexDirection: 'row'}}>
+        <SearchBar 
+          containerStyle={styles.searchBar}
+          placeholder="Type here..."
+          onChangeText={setSearchText}
+          value={searchText}>
+        </SearchBar>
+      </View>
+      <ScrollView>
+        {ranchPals.length > 0 ? <Text style={styles.titleBar}>Ranch</Text> : <></>}
+        {ranchPals.map((id, i) => {
+          return <PalRanchEntry id={id} key={i} index={i}/>
+        })}
+        {palList.length > 0 ? <Text style={styles.titleBar}>Dropped</Text> : <></>}
+        {palList.map((id, i) => {
+          return <PalEntry id={id} key={i} index={i}/>
+        })}
+      </ScrollView>
+    </View>
   );
 };
 
@@ -104,4 +106,9 @@ const styles = {
     borderRadius: 10,
     margin: 2,
   },
+  titleBar: {
+    backgroundColor: '#aaa',
+    fontSize: 16,
+    padding: 6
+  }
 }

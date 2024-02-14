@@ -90,12 +90,11 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   timer: {
-    flex: 1,
     textAlign: 'center',
+    paddingHorizontal: 8,
   },
   remove: {
-    flex: 1,
-    paddingRight: 8,
+    paddingHorizontal: 8,
     justifyContent: 'center',
     alignItems: 'center',
   }

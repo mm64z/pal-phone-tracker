@@ -20,6 +20,19 @@ function dropTransform (dropsArray: string[]) {
   })
 }
 
+function transformSuitability(suitabilityArray: Array<{type: string}>) {
+  return suitabilityArray.map((s) => {
+    let label = s.type.replace("_", " ");
+    if (s.type.toLowerCase().indexOf("electricity") > -1) {
+      label = "Electricity";
+    }
+    if (s.type.toLowerCase().indexOf("medicine") > -1) {
+      label = "Medicine";
+    }
+    return {...s, label}
+  });
+}
+
 function loadAllPalsHandler (state: PalState, { payload }: PayloadAction<LoadAllPalsAction>) {
   const newPalMap: IdMap<Pal> = {};
   payload.allPalJson.map((pal: PalJson) => {
@@ -29,7 +42,7 @@ function loadAllPalsHandler (state: PalState, { payload }: PayloadAction<LoadAll
       image: palImages[pal.key],
       aura: pal.aura,
       food: pal.stats.food,
-      suitability: pal.suitability,
+      suitability: transformSuitability(pal.suitability),
       drops: dropTransform(pal.drops),
       speed: pal.stats.speed,
     }
