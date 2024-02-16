@@ -62,7 +62,9 @@ const mapStateToProps = (work: WorkType) => {
 
 const styles = StyleSheet.create({
   imageContainer: {
-    flexGrow: 1
+    flexGrow: 1,
+    paddingHorizontal: 8,
+    alignItems: 'center',
   },
   image: {
     width: 35,
